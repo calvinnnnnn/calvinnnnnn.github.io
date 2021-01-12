@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
-  <title>sqlhelper - Hexo</title>
+  <title>dream - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -162,7 +162,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="sqlhelper">
+            <span class="h2" id="subtitle" title="dream">
               
             </span>
 
@@ -172,7 +172,7 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-01-12 10:48" pubdate>
+      <time datetime="2021-01-12 10:50" pubdate>
         2021年1月12日 上午
       </time>
     </span>
@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      188 字
+      1.4k 字
     </span>
   
 
@@ -194,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      2
+      14
        分钟
     </span>
   
@@ -224,11 +224,20 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">sqlhelper</h1>
+            <h1 style="display: none">dream</h1>
             
             <div class="markdown-body">
-              <p>为flask创建连接数据库</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding:utf-8 -*-</span><br><span class="hljs-comment"># @AUTHOR : CALVIN</span><br><span class="hljs-comment"># @TIME : 2021/1/4 15:42</span><br><br><span class="hljs-keyword">import</span> pymysql<br><span class="hljs-keyword">from</span> dbutils.pooled_db <span class="hljs-keyword">import</span> PooledDB<br><br><span class="hljs-comment"># 创建数据库连接池</span><br>pool = PooledDB(<br>    creator=pymysql,<br>    maxconnections=<span class="hljs-number">3</span>,<br>    host=<span class="hljs-string">&#x27;127.0.0.1&#x27;</span>,<br>    blocking=<span class="hljs-literal">True</span>,<br>    port=<span class="hljs-number">3306</span>,<br>    user=<span class="hljs-string">&#x27;root&#x27;</span>,<br>    password=<span class="hljs-string">&#x27;toor&#x27;</span>,<br>    database=<span class="hljs-string">&#x27;test_flask1&#x27;</span>,<br>    charset=<span class="hljs-string">&#x27;utf8&#x27;</span><br>)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sql_fetch_all</span>(<span class="hljs-params">sql, *args</span>):</span><br>    <span class="hljs-comment"># 创建一个新连接/新游标</span><br>    con1 = pool.connection()<br>    cur = con1.cursor()<br><br>    <span class="hljs-comment"># 使用该连接进行查询</span><br>    cur.execute(sql, *args)<br>    result = cur.fetchall()<br><br>    <span class="hljs-comment"># 关闭连接</span><br>    cur.close()<br>    con1.close()  <span class="hljs-comment"># 将连接还到连接池中</span><br><br>    <span class="hljs-keyword">return</span> result<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sql_fetch_one</span>(<span class="hljs-params">sql, *args</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;获取一条数据&quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 创建一个新连接/新游标</span><br>    con1 = pool.connection()<br>    cur = con1.cursor()<br><br>    <span class="hljs-comment"># 使用该连接进行查询</span><br>    cur.execute(sql, *args)<br>    result = cur.fetchone()<br><br>    <span class="hljs-comment"># 关闭连接</span><br>    cur.close()<br>    con1.close()  <span class="hljs-comment"># 将连接还到连接池中</span><br><br>    <span class="hljs-keyword">return</span> result<br></code></pre></td></tr></table></figure>
+              <p>《梦的解析》第一次告诉曾经无知和充满疑惑的人们：梦是一个人与自己内心的真实对话，是自己向自己学习的过程，是另外一次与自己息息相关的人生。</p>
+<p>在隐秘的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%A2%A6%E5%A2%83">梦境</a>所看见、所感觉到的一切，呼吸、眼泪、痛苦以及欢乐，并不是都没有意义的。弗洛伊德在《梦的解析》中还认为人在清醒的意识下面，还有一个潜在的心理活动在进行着，这种观点就是著名的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%BD%9C%E6%84%8F%E8%AF%86/65867">潜意识</a>理论。 [6] </p>
+<p>弗洛伊德在<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E3%80%8A%E6%A2%A6%E7%9A%84%E8%A7%A3%E6%9E%90%E3%80%8B">《梦的解析》</a>中从心理学角度对梦进行了<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%B3%BB%E7%BB%9F%E7%A0%94%E7%A9%B6">系统研究</a>，这些研究使梦与疾病的关系渐渐清晰起来。奥地利心理学家<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E9%98%BF%E5%BE%B7%E5%8B%92">阿德勒</a>认为，梦是在潜意识中进行的自我调整和<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%BF%80%E5%8A%B1">激励</a>，以及对未来目标的设定。美国心理学家<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%BC%97%E6%B4%9B%E5%A7%86">弗洛姆</a>认为，梦的功能是探讨做梦者的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BA%BA%E9%99%85%E5%85%B3%E7%B3%BB">人际关系</a>，并帮其找到解决这些问题的答案。</p>
+<p>对梦做出比较科学认识的是20世纪50年代兴起的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%AE%9E%E9%AA%8C%E5%BF%83%E7%90%86%E5%AD%A6">实验心理学</a>。实验心理学研究发现，梦的发生与人在<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%9D%A1%E7%9C%A0%E7%8A%B6%E6%80%81">睡眠状态</a>下快速动眼和非快速动眼的周期性相关。一般来说，梦发生在快速动眼睡眠阶段，梦的内容也有规律。在第一、第二次眼球快动时，梦大多重演白天的经历，第三、第四次快速动眼时，梦多半是过去的情景和体验；第五次快速动眼持续时间最长，过去与最近的事互相交织。人们在睡眠中感觉身体不适或疾病，大多发生在第一、第二次快速动眼时做的梦，而<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%85%A2%E6%80%A7%E7%97%85">慢性病</a>的感觉可能在第三、第四次快速动眼时做的梦里。</p>
+<p>真正的作梦只有在人类身上被直接证实发生过，不过很多人相信作梦也会发生在其他动物身上。动物已经确定会有快速眼动睡眠，然而他们的主体经验却难以确定。平均拥有最长快速眼动睡眠时期的动物是<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%A9%BF%E5%B1%B1%E7%94%B2">穿山甲</a>。<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%93%BA%E4%B9%B3%E7%B1%BB">哺乳类</a>可能是大自然中唯一，或者至少是最频繁的做梦者，因为和他们的睡眠模式有关。</p>
+<p>也有人认为上述有关<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%A2%A6%E7%9A%84%E8%A7%A3%E9%87%8A">梦的解释</a>是不科学的，梦只是人睡眠时的一种心理活动，梦中的心理活动与人清醒时的心理活动一样都是客观事物在人脑中的反映。梦中离奇的梦境是因人睡眠大脑意识不清时对各种客观事物的刺激产生的错觉引起的。如，人清醒心动过速时产生的似乎被追赶的心悸感，在梦中变成了被人追赶的离奇恐惧的恶梦，人清醒心动过慢或早博时引起的心悬空、心下沉的心悸感，在梦中变成了人悬空、人下落的离奇恐惧的恶梦。梦中经常能感觉到一些人清醒时不易感觉到的轻微的生理症状，是因人睡眠时来自外界的各种客观事物的刺激相对变小，来自体内的各种客观事物的刺激相对变强引起的。</p>
+<p>弗洛伊德认为，梦不是偶然形成的联想，而是压抑的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%AC%B2%E6%9C%9B/85381">欲望</a>（潜意识的情欲伪装的满足）。它可能表现对治疗有重要意义的情绪的来源，包含导致某种心理的原因。所以，梦是通往潜意识的桥梁。</p>
+<p>但是解剖弗洛伊德对梦的工作的分析，使我们惊讶的发现：梦的工作充满着认识思维活动，这与弗洛伊德认为“梦是潜意识活动”的观点大相径庭。</p>
+<p>弗洛伊德指出，任何梦都可分为显相和隐相：显相，梦的表面规象，是指那些人们能记忆并描述出来的内容，即类似于假面具；隐相，是指梦的本质内容，即真实意思，类似于假面具所掩盖的真实欲望。</p>
+<p>在弗格伊德看来，梦的运作、化装主要通过<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%8E%8B%E7%BC%A9/1498580">压缩</a>、移置特征、次级修正的过程把梦的显相完全歪曲，压缩，是显象的梦被转化为简略的形式，梦的某些成分被略去，另—些只以残缺的形式出现。移置，即一个不重要的观念成小事，梦中却变成大事或占据置要地位。象征，即以具体的形式代替抽象的欲望。它显示了梦作为通往潜意识的真实线径；能形成的内容（变化、矛盾、原因）中反映逻辑关系，而是以改头换面的方式出现。次级修正，即把梦中无条理的材料加以系统化来掩盖真相等。 [7] </p>
+<p>书经历近一个世纪而不衰，弗洛伊德对梦的解释，已深入到内心深处的潜在动机，能言前人所未言，敢言前人之不敢言，实乃超出前人之上。但他在释梦中的主观性、任意性和神秘性也是显而易见。他把人的一切梦的隐义都与梦者<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%BD%9C%E6%84%8F%E8%AF%86">潜意识</a>中的能欲望联系起来，这显得有些牵强了。他根据其<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%80%A7%E6%AC%B2">性欲</a>理论来解释梦，不是把人看作社会的人，而近乎完全看成是一种生物，故一开始就受到人们的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%B0%B4%E8%B4%A3">谴责</a>。 [6]</p>
 
             </div>
             <hr>
@@ -245,18 +254,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/01/12/dream/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">dream</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/01/11/hello-world/">
-                        <span class="hidden-mobile">Hello World</span>
+                      <a href="/2021/01/12/sqlhelper/">
+                        <span class="hidden-mobile">sqlhelper</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
