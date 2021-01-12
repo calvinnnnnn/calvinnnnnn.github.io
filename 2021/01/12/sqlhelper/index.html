@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      9 字
+      188 字
     </span>
   
 
@@ -194,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      2
        分钟
     </span>
   
@@ -228,6 +228,7 @@
             
             <div class="markdown-body">
               <p>为flask创建连接数据库</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding:utf-8 -*-</span><br><span class="hljs-comment"># @AUTHOR : CALVIN</span><br><span class="hljs-comment"># @TIME : 2021/1/4 15:42</span><br><br><span class="hljs-keyword">import</span> pymysql<br><span class="hljs-keyword">from</span> dbutils.pooled_db <span class="hljs-keyword">import</span> PooledDB<br><br><span class="hljs-comment"># 创建数据库连接池</span><br>pool = PooledDB(<br>    creator=pymysql,<br>    maxconnections=<span class="hljs-number">3</span>,<br>    host=<span class="hljs-string">&#x27;127.0.0.1&#x27;</span>,<br>    blocking=<span class="hljs-literal">True</span>,<br>    port=<span class="hljs-number">3306</span>,<br>    user=<span class="hljs-string">&#x27;root&#x27;</span>,<br>    password=<span class="hljs-string">&#x27;toor&#x27;</span>,<br>    database=<span class="hljs-string">&#x27;test_flask1&#x27;</span>,<br>    charset=<span class="hljs-string">&#x27;utf8&#x27;</span><br>)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sql_fetch_all</span>(<span class="hljs-params">sql, *args</span>):</span><br>    <span class="hljs-comment"># 创建一个新连接/新游标</span><br>    con1 = pool.connection()<br>    cur = con1.cursor()<br><br>    <span class="hljs-comment"># 使用该连接进行查询</span><br>    cur.execute(sql, *args)<br>    result = cur.fetchall()<br><br>    <span class="hljs-comment"># 关闭连接</span><br>    cur.close()<br>    con1.close()  <span class="hljs-comment"># 将连接还到连接池中</span><br><br>    <span class="hljs-keyword">return</span> result<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sql_fetch_one</span>(<span class="hljs-params">sql, *args</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;获取一条数据&quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 创建一个新连接/新游标</span><br>    con1 = pool.connection()<br>    cur = con1.cursor()<br><br>    <span class="hljs-comment"># 使用该连接进行查询</span><br>    cur.execute(sql, *args)<br>    result = cur.fetchone()<br><br>    <span class="hljs-comment"># 关闭连接</span><br>    cur.close()<br>    con1.close()  <span class="hljs-comment"># 将连接还到连接池中</span><br><br>    <span class="hljs-keyword">return</span> result<br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>
